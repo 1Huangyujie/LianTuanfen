@@ -1,0 +1,36 @@
+.logo {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1890ff;
+  font-size: 18px;
+  font-weight: bold;
+  border-bottom: 1px solid #f0f0f0;
+  margin-bottom: 8px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.username {
+  margin-right: 8px;
+  font-size: 14px;
+}
+
+.ant-layout-sider-collapsed .logo span {
+  display: none;
+}
+
+.ant-menu-submenu-title {
+  display: flex;
+  align-items: center;
+}
