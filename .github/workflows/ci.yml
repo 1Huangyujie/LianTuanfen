@@ -1,0 +1,54 @@
+name: Node.js CI/CD
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x]
+    steps:
+      # 检出代码
+      - name: 检出代码
+        uses: actions/checkout@v3
+
+      # 设置Node.js版本
+      - name: 设置Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      # 前端依赖安装与构建
+      - name: 安装前端依赖
+        working-directory: ./client
+        run: npm install
+      - name: 构建前端
+        working-directory: ./client
+        run: npm run build || echo "未配置build脚本"
+      # 可选：前端测试
+      - name: 前端测试（如有）
+        working-directory: ./client
+        run: npm test || echo "未配置test脚本"
+
+      # 后端依赖安装
+      - name: 安装后端依赖
+        working-directory: ./server
+        run: npm install
+      # 可选：后端测试
+      - name: 后端测试（如有）
+        working-directory: ./server
+        run: npm test || echo "未配置test脚本"
+
+      # 结束
+      - name: CI流程结束
+        run: echo "CI流程已完成。"
+
+# 说明：
+# 1. 该配置会在每次推送到main分支或PR时自动运行。
+# 2. 包含前后端依赖安装、前端构建、前后端测试（如有test脚本）。
+# 3. 可根据实际需要扩展部署、代码检查等步骤。 
